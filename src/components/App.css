@@ -11,41 +11,6 @@
     --font-face: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-.App-Container {
-    display: flex;
-    flex-flow: column nowrap;
-    box-sizing: border-box;
-    min-height: 100vh;
-    background: whitesmoke;
-    font-family: var(--font-face);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1;
-    justify-content: center;
-    align-items: center;
-}
-
-.App-Spacer {
-    flex-grow: 1;
-}
-
-.App-Footer {
-    margin: 16px;
-}
-
-.App-Footer p {
-    font-size: 12px;
-}
-
-.main-container.linked .button, .main-container.linked h1 {
-    opacity: .3;
-    transition: opacity 300ms linear;
-}
-.main-container.linked p {
-    color: var(--color-smoke);
-    transition: color 300ms linear;
-}
-
 h1 {
     text-align: center;
     transition: opacity 300ms linear;
@@ -78,6 +43,41 @@ a:hover, a:visited:hover {
     color: var(--color-ocean);
 }
 
+.App-Container {
+    display: flex;
+    flex-flow: column nowrap;
+    box-sizing: border-box;
+    min-height: 100vh;
+    background: whitesmoke;
+    font-family: var(--font-face);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.App-Spacer {
+    flex-grow: 1;
+}
+
+.App-Footer {
+    margin-bottom: 24px;
+}
+
+.App-Footer p {
+    font-size: 12px;
+}
+
+.main-container.linked .button, .main-container.linked h1 {
+    opacity: .3;
+    transition: opacity 300ms linear;
+}
+.main-container.linked p {
+    color: var(--color-smoke);
+    transition: color 300ms linear;
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
@@ -87,6 +87,7 @@ a:hover, a:visited:hover {
 
 .button-container {
     display: flex;
+    flex-flow: column nowrap;
     margin: 60px auto;
     flex-wrap: wrap;
     justify-content: center;
@@ -97,6 +98,8 @@ a:hover, a:visited:hover {
     overflow: hidden;
     margin: 10px;
     padding: 12px 12px;
+    min-width: 180px;
+    max-height: 44px;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;

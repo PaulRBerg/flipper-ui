@@ -73,14 +73,14 @@ class App extends Component {
 			alert("Don't be greedy, you're already being paid a salary!");
 			return;
 		}
-
-		const interval = "1";
-		console.log('web3.eth.blockNumber', web3.eth.blockNumber);
+		
 		try {
-			await contract.startSalary(
+			const blockNumber = await web3.eth.getBlockNumber();
+			const interval = "1";
+			const startSalaryResult = await contract.startSalary(
 				accounts[1],
-				web3.eth.blockNumber + 10,
-				web3.eth.blockNumber + 1010,
+				blockNumber + 100,
+				blockNumber + 1100,
 				web3.utils.toWei("0.0001", "ether"),
 				interval,
 				{
@@ -88,6 +88,7 @@ class App extends Component {
 					value: web3.utils.toWei("0.1", "ether")
 				}
 			);
+			console.log("startSalaryResult", startSalaryResult);
 		} catch(error) {
 			// Catch any errors for any of the above operations.
 			alert(
@@ -98,6 +99,17 @@ class App extends Component {
 	}
 
 	render() {
+		const { accounts, web3 } = this.state;
+
+		if (!web3) {
+			return <div className='App-Container'>Loading Web3, accounts, and contract...</div>;
+		}
+
+		if (!accounts || accounts.length === 0) {
+			return <div className='App-Container'>Please login to MetaMask...</div>;
+		}
+		console.log("accounts", accounts);
+
 		return (
 			<div className='App-Container'>
 				<div className='App-Spacer'/>
@@ -114,7 +126,7 @@ class App extends Component {
 					</p>
 					<div className="button-container">
 
-						<button className='button -green center' onClick={this.requestSalary}>{this.state.paying ? "Done" : "Request Salary"}</button>
+						<button className='button -green center' onClick={this.requestSalary}>{this.state.paying ? "Paying..." : "Request Salary"}</button>
 
 						<div className='button -salmon center'>{this.state.balance} DAI</div>
 
