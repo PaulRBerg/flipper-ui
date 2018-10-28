@@ -7,7 +7,7 @@ import truffleContract from "truffle-contract";
 import "./App.css";
 
 class App extends Component {
-	employees = { alicia: "0xe7D6a2a1cbEd37EE7446d78Fd5E6B38AAAe3f3B2", john: "0x574B4756606715Fb35f112ae8283b8a16319c895" };
+	employees = { alicia: "0xe7D6a2a1cbEd37EE7446d78Fd5E6B38AAAe3f3B2", bob: "0x574B4756606715Fb35f112ae8283b8a16319c895" };
 	state = { balance: "0.00", web3: null, accounts: null, contract: null, paying: false, timer: null };
 
 	constructor(props) {
@@ -23,6 +23,7 @@ class App extends Component {
 
 			// Use web3 to get the user's accounts.
 			const accounts = await web3.eth.getAccounts();
+			console.log("accounts", accounts);
 
 			// Get the contract instance.
 			const Contract = truffleContract(SalariesContract);
@@ -42,15 +43,18 @@ class App extends Component {
 	};
 
 	refreshBalance() {
+		const { web3 } = this.state;
+		const defaultAccount = localStorage.getItem("defaultAccount") || this.employees.alicia;
+
 		const fn = async() => {
-			console.log("timer log...");
+			// console.log("timer log...");
 			const { contract } = this.state;
 
 			try {
-				const balance = await contract.balanceOf(this.employees.alicia);
+				const balance = await contract.balanceOf(defaultAccount);
 				this.setState({
 					...this.state,
-					balance: balance.toString(),
+					balance: web3.utils.fromWei(balance.toString(), "ether"),
 					paying: true
 				});
 			} catch (error) {
@@ -73,18 +77,21 @@ class App extends Component {
 			alert("Don't be greedy, you're already being paid a salary!");
 			return;
 		}
-		
+
 		try {
 			const blockNumber = await web3.eth.getBlockNumber();
+			console.log("blockNumber", blockNumber);
 			const interval = "1";
 			const startSalaryResult = await contract.startSalary(
-				accounts[1],
+				localStorage.getItem("defaultAccount") || this.employees.alicia,
 				blockNumber + 100,
 				blockNumber + 1100,
 				web3.utils.toWei("0.0001", "ether"),
 				interval,
 				{
 					from: accounts[0],
+					gas: web3.utils.toHex("2000000"),
+					gasPrice: web3.utils.toHex(web3.utils.toWei("1", "gwei")),
 					value: web3.utils.toWei("0.1", "ether")
 				}
 			);
@@ -108,7 +115,6 @@ class App extends Component {
 		if (!accounts || accounts.length === 0) {
 			return <div className='App-Container'>Please login to MetaMask...</div>;
 		}
-		console.log("accounts", accounts);
 
 		return (
 			<div className='App-Container'>
