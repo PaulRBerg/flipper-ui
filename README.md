@@ -1,0 +1,1 @@
+The frontend app for the employees using [Flipper](https://github.com/PaulRBerg/CryptoLife/tree/Honeybadgerz_Flipper).
