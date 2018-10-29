@@ -83,7 +83,7 @@ class App extends Component {
 			console.log("blockNumber", blockNumber);
 			const interval = "1";
 			const startSalaryResult = await contract.startSalary(
-				localStorage.getItem("defaultAccount") || this.employees.alicia,
+				localStorage.getItem("defaultAccount") || this.employees.bob,
 				blockNumber + 100,
 				blockNumber + 1100,
 				web3.utils.toWei("0.0001", "ether"),
@@ -123,7 +123,7 @@ class App extends Component {
 				<div className='main-container'>
 					<h1>
 						<span role="img" aria-label="Rocket">🚀&nbsp;</span>
-						Streaming Salaries
+						Flipper: Streaming Salaries
 						<span role="img" aria-label="StarEyes">&nbsp;🤩</span>
 					</h1>
 					<p>
